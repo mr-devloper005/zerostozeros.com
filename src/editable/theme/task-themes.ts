@@ -2,13 +2,11 @@ import type { CSSProperties } from 'react'
 import type { TaskKey } from '@/lib/site-config'
 
 /*
-  Yelp-style task surfaces.
+  hirekit-temlis inspired task surfaces.
 
-  Every task (archive + detail) now shares one cohesive premium identity:
-  clean white surfaces, the signature Yelp red accent, hairline gray borders
-  and a single crisp sans-serif — exactly like Yelp. Per-task copy (kicker /
-  note) still varies so each section keeps a little voice, but the visual
-  language is unified. Tokens are delivered via CSS variables (`--tk-*`).
+  Shared visual language: cream page, deep-purple primary, neon-green loud CTA,
+  bordered cards, Instrument Serif display + Inter body. Only the eyebrow
+  kicker and note copy vary per task. All tokens delivered via `--tk-*`.
 */
 
 export type TaskTheme = {
@@ -26,40 +24,70 @@ export type TaskTheme = {
   muted: string
   line: string
   accent: string
+  accentB: string
   accentSoft: string
   onAccent: string
   glow: string
   radius: string
 }
 
-const YELP_FONT = "'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif"
+const DISPLAY = "'Instrument Serif', 'Times New Roman', Georgia, serif"
+const BODY = "'Inter', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif"
 
-// Shared Yelp palette — every task inherits this; only kicker/note differ.
 const base = {
   dark: false,
-  fontDisplay: YELP_FONT,
-  fontBody: YELP_FONT,
-  bg: '#ffffff',
+  fontDisplay: DISPLAY,
+  fontBody: BODY,
+  bg: '#fcfaed',
   surface: '#ffffff',
-  raised: '#f7f7f7',
-  text: '#1a1a1a',
-  muted: '#6b6b6b',
-  line: '#e6e6e6',
-  accent: '#d32323',
-  accentSoft: '#fdecec',
-  onAccent: '#ffffff',
-  glow: 'rgba(211,35,35,0.06)',
-  radius: '0.75rem',
+  raised: '#f4f0e2',
+  text: '#120e00',
+  muted: '#555555',
+  line: '#e0e0e0',
+  accent: '#520080',
+  accentB: '#c6fe01',
+  accentSoft: '#ebe1fd',
+  onAccent: '#120e00',
+  glow: 'rgba(82,0,128,0.10)',
+  radius: '1.25rem',
 } satisfies Omit<TaskTheme, 'kicker' | 'note'>
 
 export const taskThemes: Record<TaskKey, TaskTheme> = {
-  article: { ...base, kicker: 'Articles', note: 'In-depth reads, guides and stories worth your time.' },
-  listing: { ...base, kicker: 'Businesses', note: 'Find, compare and connect with local businesses.' },
-  classified: { ...base, kicker: 'Marketplace', note: 'Fresh offers and listings, ready to act on.' },
-  image: { ...base, kicker: 'Photos', note: 'A visual feed of standout images and galleries.' },
-  sbm: { ...base, kicker: 'Bookmarks', note: 'Curated resources and links worth saving.' },
-  pdf: { ...base, kicker: 'Documents', note: 'Downloadable guides, reports and references.' },
-  profile: { ...base, kicker: 'People', note: 'Discover creators, businesses and profiles.' },
+  article: {
+    ...base,
+    kicker: 'Field notes',
+    note: 'Long-form essays, guides and stories worth your time.',
+  },
+  listing: {
+    ...base,
+    kicker: 'Local Directory',
+    note: 'Find, compare and connect with local businesses near you.',
+  },
+  classified: {
+    ...base,
+    kicker: 'Marketplace',
+    note: 'Fresh offers, deals and listings ready to act on.',
+  },
+  image: {
+    ...base,
+    kicker: 'Visual feed',
+    note: 'A gallery-first stream of standout images and photo stories.',
+  },
+  sbm: {
+    ...base,
+    kicker: 'Saved shelf',
+    note: 'Curated links and resources worth bookmarking.',
+  },
+  pdf: {
+    ...base,
+    kicker: 'Reference Library',
+    note: 'Downloadable guides, reports and reference material.',
+  },
+  profile: {
+    ...base,
+    kicker: 'People',
+    note: 'Discover creators, businesses and voices behind the platform.',
+  },
 }
 
 export function getTaskTheme(task: TaskKey): TaskTheme {
@@ -77,14 +105,14 @@ export function taskThemeStyle(task: TaskKey): CSSProperties {
     '--tk-muted': t.muted,
     '--tk-line': t.line,
     '--tk-accent': t.accent,
+    '--tk-accent-b': t.accentB,
     '--tk-accent-soft': t.accentSoft,
     '--tk-on-accent': t.onAccent,
     '--tk-glow': t.glow,
     '--tk-radius': t.radius,
-    // Re-point the shared article-body accent vars so post HTML (headings,
-    // links) inherits this task's accent instead of the global site accent.
+    '--tk-gradient': 'none',
     '--slot4-accent': t.accent,
-    '--slot4-accent-fill': t.accent,
+    '--slot4-accent-fill': t.accentB,
     '--editable-font-display': t.fontDisplay,
     '--editable-font-body': t.fontBody,
     fontFamily: t.fontBody,

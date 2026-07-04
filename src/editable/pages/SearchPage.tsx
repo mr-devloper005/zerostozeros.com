@@ -9,6 +9,8 @@ import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import type { SitePost } from '@/lib/site-connector'
 import { EditableSiteShell } from '@/editable/shell/EditableSiteShell'
 import { pagesContent } from '@/editable/content/pages.content'
+import { formatRichHtml } from '@/components/shared/rich-content'
+import { Ads, getSlotSizes } from '@/lib/ads'
 
 export const revalidate = 3
 
@@ -69,7 +71,7 @@ function SearchResultCard({ post, index }: { post: SitePost; index: number }) {
       <div className="p-5 sm:p-6">
         {!image ? <span className="rounded-full bg-[var(--editable-page-text,#211713)] px-3 py-1 text-[11px] font-black uppercase tracking-[0.18em] text-white">{taskLabel}</span> : null}
         <h2 className="mt-4 line-clamp-3 text-2xl font-black leading-[0.95] tracking-[-0.06em] text-[var(--editable-page-text,#211713)]">{post.title}</h2>
-        {summary ? <p className="mt-4 line-clamp-3 text-sm font-semibold leading-7 text-[var(--editable-page-text,#211713)]/65">{summary}</p> : null}
+        {summary ? <div className="mt-2 line-clamp-2 flex-1 text-sm leading-6 text-[var(--slot4-muted-text)]" dangerouslySetInnerHTML={{ __html: formatRichHtml(summary) }} /> : null}
         <span className="mt-5 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.18em] opacity-60 group-hover:opacity-100">Open result <ArrowRight className="h-4 w-4" /></span>
       </div>
     </Link>
@@ -113,11 +115,14 @@ export default async function SearchPage({ searchParams }: { searchParams?: Prom
                   <option value="">All content types</option>
                   {enabledTasks.map((item) => <option key={item.key} value={item.key}>{item.label}</option>)}
                 </select>
+                
               </div>
               <button className="mt-3 inline-flex h-12 w-full items-center justify-center rounded-2xl bg-[var(--editable-page-text,#2f1d16)] px-6 text-sm font-black uppercase tracking-[0.18em] text-[var(--editable-page-bg,#fff7ee)] transition hover:-translate-y-0.5" type="submit">Search</button>
             </form>
           </div>
-
+                    <div className="mt-14">
+                      <Ads slot="article-bottom" size={getSlotSizes('article-bottom')[0]} showLabel className="w-full" />
+                    </div>
           <div className="mt-10 flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.24em] opacity-50">{results.length} results</p>
