@@ -11,7 +11,7 @@ export const pagesContent = {
     },
     hero: {
       badge: 'Discovery, done right',
-      title: ['A calm home for', 'discovery and reference.'],
+      title: ['Local businesses, verified', 'and easy to reach.'],
       description: 'Browse the Local Directory to find a business, or open the Reference Library for downloadable guides. Everything lives on one home base.',
       primaryCta: { label: 'Open the directory', href: '/listings' },
       secondaryCta: { label: 'Browse the library', href: '/pdf' },
