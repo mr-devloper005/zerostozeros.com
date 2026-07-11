@@ -142,14 +142,6 @@ const leadText = (post: SitePost) => {
 }
 const categoryOf = (post: SitePost, fallback: string) =>
   asText(getContent(post).category) || post.tags?.[0] || fallback
-const formatDate = (value: string) => {
-  const raw = String(value || '').trim()
-  if (!raw) return ''
-  const d = new Date(raw)
-  if (isNaN(d.getTime())) return raw
-  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
-}
-
 // Format raw byte count into a human-readable size (KB / MB / GB).
 const formatBytes = (bytes: number) => {
   if (!Number.isFinite(bytes) || bytes <= 0) return ''
@@ -188,7 +180,6 @@ async function fetchRemoteFileSize(url: string): Promise<string> {
       method: 'HEAD',
       signal: controller.signal,
       redirect: 'follow',
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       next: { revalidate: 3600 } as any,
     })
     clearTimeout(timer)
@@ -339,12 +330,6 @@ function ListingDetail({ post, related }: { post: SitePost; related: SitePost[] 
   const hours = getField(post, ['hours', 'schedule', 'open', 'timings', 'openingHours'])
   const category = getField(post, ['category', 'type', 'industry']) || 'Local business'
   const priceRange = getField(post, ['priceRange', 'price', 'budget'])
-  const listedOn = formatDate(
-    getField(post, ['listedOn', 'createdAt', 'publishedAt', 'date', 'published']) ||
-      post.publishedAt ||
-      post.createdAt ||
-      ''
-  )
   const mapSrc = mapSrcFor(post)
   const gallery = images.slice(1)
   const titleWords = post.title.split(' ')
