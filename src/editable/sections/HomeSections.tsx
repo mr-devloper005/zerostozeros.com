@@ -339,9 +339,6 @@ export function EditableMagazineSplit({ primaryTask, primaryRoute, posts, timeSe
             <span className={dc.badge.accentPill}>
               <Sparkles className="h-3.5 w-3.5" /> Recently added
             </span>
-            <h2 className={`${dc.type.sectionTitle} mt-5`}>
-              Real posts, <span className="editable-gradient-text">real time</span>.
-            </h2>
             <p className={`${dc.type.lead} mx-auto mt-5 max-w-2xl`}>
               Every card below is a live entry from the platform — the newest addition sits at the top.
             </p>

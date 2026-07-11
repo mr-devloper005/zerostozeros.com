@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import {
   ArrowUpRight, BookOpen, BriefcaseBusiness, ChevronDown, Download, FileText,
-  Globe, MapPin, Phone, Search, Sparkles, Tag, UserRound,
+  Globe, MapPin, Phone, Search, Tag, UserRound,
 } from 'lucide-react'
 import { buildTaskMetadata } from '@/lib/seo'
 import { CATEGORY_OPTIONS, normalizeCategory } from '@/lib/categories'
@@ -148,12 +148,6 @@ export function TaskArchiveView({
         <header className="relative overflow-hidden">
           <div className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[900px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(0,155,238,0.14),rgba(230,114,0,0.05)_45%,transparent_70%)] blur-3xl" />
           <div className="relative mx-auto max-w-[var(--editable-container)] px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
-            <EditableReveal index={0}>
-              <span className={dc.badge.accentPill}>
-                <Sparkles className="h-3.5 w-3.5" /> {label}
-              </span>
-            </EditableReveal>
-
             <EditableReveal index={1}>
               <h1 className={`${dc.type.heroTitle} mt-6 max-w-3xl text-balance`}>
                 {voice?.headline?.split(' ').slice(0, -2).join(' ') || `Browse the ${label}`}
